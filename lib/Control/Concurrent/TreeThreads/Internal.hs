@@ -191,8 +191,8 @@ getBranchRecord = lift (asks branches)
 
 -- |fromEnvironment provides the result of applying a passed function
 -- to the current environment
-fromEnvironment :: (a -> b) -> TreeThread a b
-fromEnvironment = asks
+withEnvironment :: (a -> b) -> TreeThread a b
+withEnvironment = asks
 
 -- |environment provides the current environment.
 environment :: TreeThread a a

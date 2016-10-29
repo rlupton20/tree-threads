@@ -3,6 +3,6 @@ module Control.Concurrent.TreeThreads
 , sproutOn
 , sprout
 , environment
-, fromEnvironment ) where
+, withEnvironment ) where
 
 import Control.Concurrent.TreeThreads.Internal
