@@ -1,5 +1,6 @@
 module Control.Concurrent.TreeThreads
 ( TreeThread
+, Branch
 , sproutOn
 , sprout
 , environment
