@@ -13,9 +13,7 @@ import Control.Monad (forever)
 import Control.Monad.IO.Class (liftIO)
 import Control.Exception (try, getMaskingState, MaskingState(..))
 
-import Control.Concurrent.TreeThreads.Manager
-import Control.Concurrent.TreeThreads.Manage
-import Control.Concurrent.TreeThreads.Types
+import Control.Concurrent.TreeThreads.Internal
 
 managerTest :: TF.Test
 managerTest = testGroup "Manager.hs tests" $ hUnitTestToTests $ HU.TestList []
