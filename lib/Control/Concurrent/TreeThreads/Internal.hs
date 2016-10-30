@@ -15,6 +15,7 @@ import Control.Monad (forever)
 import Control.Monad.Trans (lift)
 import Control.Monad.IO.Class (liftIO)
 import Control.Monad.Trans.Reader (ReaderT, runReaderT, ask, asks)
+import qualified Control.Monad.Trans.Reader as Reader ( local ) 
 
 import Data.Typeable (Typeable)
 
@@ -197,3 +198,9 @@ withEnvironment = asks
 -- |environment provides the current environment.
 environment :: TreeThread a a
 environment = ask
+
+-- |local behaves here in much the same way as with the Reader monad.
+-- It allows you to perform a TreeThread computation in an environment
+-- which has been modified by a function.
+local :: (a -> a) -> TreeThread a b -> TreeThread a b
+local = Reader.local

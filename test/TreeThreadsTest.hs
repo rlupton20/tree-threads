@@ -33,7 +33,9 @@ basicFunctionalTests = HU.TestLabel "Basic functional tests" $
               , testExceptionsDontPropagateDown
               , testSproutOnMaskingState
               , testSproutForksToUnmaskedState
-              , testBranchIsTrackedCorrectly ]
+              , testBranchIsTrackedCorrectly
+              , testLocalChangesEnvironment
+              , testLocalCarriesThroughSprout ]
 
 
 testSprout :: HU.Test
@@ -131,3 +133,31 @@ getBranches :: TreeThread a (Maybe [Branch])
 getBranches = do
   br <- getBranchRecord
   liftIO $ readTVarIO br
+
+
+testLocalChangesEnvironment :: HU.Test
+testLocalChangesEnvironment = "local: test local changes the environment" ~:
+  test `sproutOn` Nothing
+  where
+    test :: TreeThread (Maybe ()) ()
+    test = do
+      tmpenv <- local (const $ Just ()) environment
+      liftIO $ Just () @=? tmpenv
+
+
+testLocalCarriesThroughSprout :: HU.Test
+testLocalCarriesThroughSprout = "local: test local is carried through to a sprouted branch" ~: 
+  test `sproutOn` Nothing
+  where
+    test :: TreeThread (Maybe ()) ()
+    test = do
+      tmvar <- liftIO $ newEmptyTMVarIO
+      local (const $ Just ()) $ sprout (passBackEnv tmvar)
+      liftIO $ do
+        result <- atomically $ takeTMVar tmvar
+        Just () @=? result
+
+    passBackEnv :: TMVar (Maybe ()) -> TreeThread (Maybe ()) ()
+    passBackEnv tmvar = environment >>= liftIO . atomically . putTMVar tmvar
+      
+      

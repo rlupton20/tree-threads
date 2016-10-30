@@ -4,6 +4,7 @@ module Control.Concurrent.TreeThreads
 , sproutOn
 , sprout
 , environment
-, withEnvironment ) where
+, withEnvironment
+, local ) where
 
 import Control.Concurrent.TreeThreads.Internal
