@@ -16,7 +16,7 @@ root = do
   sprout branch
   -- Carry on doing something - if the spawned branch fails
   -- it won't destroy root.
-  ...
+
 
 branch :: TreeThread Int ()
 branch = do
