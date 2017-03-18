@@ -1,0 +1,6 @@
+image: fpco/stack-build:lts-7.19
+
+test:
+  script:
+    - stack --no-docker setup
+    - stack --no-docker test
